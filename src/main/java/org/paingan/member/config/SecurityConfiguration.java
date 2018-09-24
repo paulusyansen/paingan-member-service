@@ -10,10 +10,22 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@Configuration
+//@Configuration
 //@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		
+		http.csrf().disable()
+		.authorizeRequests()
+			.antMatchers("/uaa/**","/login","/oauth/**").permitAll()
+			.anyRequest().authenticated()
+			.and().formLogin()
+			.loginPage("/login")
+			.and().httpBasic().disable();
+	}
 	
 //	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 //	
@@ -76,12 +88,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //
 //    	
 //    }
-    
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-           .ignoring()
-               .antMatchers("/**");
-    }
+//    
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web
+//           .ignoring()
+//               .antMatchers("/**");
+//    }
 
 }
