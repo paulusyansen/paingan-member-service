@@ -8,11 +8,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 import brave.sampler.Sampler;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableEurekaClient
 @EnableAutoConfiguration
 @EnableResourceServer
+@EnableSwagger2
 public class PainganMemberServiceApplication {
 
 	public static void main(String[] args) {
