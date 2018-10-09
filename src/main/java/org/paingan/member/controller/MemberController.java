@@ -23,7 +23,7 @@ public class MemberController {
 	@Autowired
 	private MemberRepository memberRepository;
 	
-	@GetMapping("/member/{id}")
+	@GetMapping("/id/{id}")
 	public @ResponseBody Member getMember(@PathVariable Long id) {
 		Member member = new Member();
 		Optional<Member> members = memberRepository.findById(id);
