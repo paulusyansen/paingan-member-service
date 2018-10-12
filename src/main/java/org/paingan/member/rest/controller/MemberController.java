@@ -1,4 +1,4 @@
-package org.paingan.member.controller;
+package org.paingan.member.rest.controller;
 
 import java.util.Optional;
 
@@ -8,12 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class MemberController {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -23,18 +25,17 @@ public class MemberController {
 	@Autowired
 	private MemberRepository memberRepository;
 	
-	@GetMapping("/id/{id}")
-	public @ResponseBody Member getMember(@PathVariable Long id) {
+	@GetMapping("/member/{id}")
+	public ResponseEntity<Member> getMember(@PathVariable Long id) {
 		Member member = new Member();
 		Optional<Member> members = memberRepository.findById(id);
 		
 		if(members.isPresent()) {
 			members.get().setPort(Integer.parseInt(environment.getProperty("local.server.port")));
-			return members.get();
 		} 
 		
 		log.info("{}", member);
 		
-		return member;
+		return ResponseEntity.ok(members.get());
 	}
 }
