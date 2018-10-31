@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping
 public class MemberController {
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
@@ -25,7 +25,7 @@ public class MemberController {
 	@Autowired
 	private MemberRepository memberRepository;
 	
-	@GetMapping("/member/{id}")
+	@GetMapping("/id/{id}")
 	public ResponseEntity<Member> getMember(@PathVariable Long id) {
 		Member member = new Member();
 		Optional<Member> members = memberRepository.findById(id);
